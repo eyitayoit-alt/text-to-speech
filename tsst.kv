@@ -1,0 +1,286 @@
+#: import SlideTransition kivy.uix.screenmanager.SlideTransition
+#: import ScreenManager kivy.uix.screenmanager.ScreenManager
+
+<ApScreen>:
+		Screen:
+				name:"Landing"
+				on_touch_down:root.current="TextMenu"
+				canvas:
+						Color:
+								rgb:0.4,0.4,0,1
+						Rectangle:
+								size:self.size
+								pos:self.pos	
+				Label:
+						text:"Text to Speech"
+						font_size:40
+						bold:True
+						pos_hint:{"y":0.3}
+						outline_width:15
+						outline_color:[1,0,0]
+				Label:
+						text:"\n An application\n that convert text \n to speech"
+						color:[1,1,1,0.5]
+						halign:"center"
+						valign:"center"
+						font_size:40
+						bold:True
+				Label:
+						text:"\nSlide to begin"
+						font_size:20
+						pos_hint:{"y":-0.4}
+				
+	
+					
+					
+					
+		
+								
+		Screen:
+				name:"TextMenu"
+				on_touch_down:root.current="Landing"
+	
+				
+				canvas:
+						Color:
+								rgb:0.8,0.6,0.5
+						Rectangle:
+								size:self.size
+								pos:self.pos	
+								
+				BoxLayout:
+						orientation:"vertical"
+						pos_hint:{"x":0.1,"y":0.4}
+						spacing:10
+						size_hint:(0.8,0.3)
+						
+						Label:
+								text:"Text to Speech Menu"
+								font_size:40
+								bold:True
+								color:[1,0,0,0.7]
+								outline_width:5
+								outline_color:[1,1,1]
+							
+						
+						
+						Button:
+								id:encrypt
+								background_normal:" "
+								background_color: [1,0,0,0.6]
+								text:"Speech From Text File"
+								font_size:25
+								size_hint:(1,None)
+								height:50
+								bold:True
+								on_release:root.current="t2sFile"
+								
+						Button:
+								id:decrypt
+								text:"Speech from Typing"
+								font_size:25
+								size_hint:(1,None)
+								height:50
+								bold:True
+								background_normal:" "
+								background_color: [1,0,0,0.5]
+								on_release:root.current="t2sText"
+										
+		
+								
+		Text2Speech:
+				name:"t2sFile"
+				on_touch_move:root.current="TextMenu"
+				canvas:
+						Color:
+								rgb:0.6,0.5,0.5
+						Rectangle:
+								size:self.size
+								pos:self.pos
+				BoxLayout:
+						orientation:"vertical"
+						size_hint:(0.8,0.2)
+						pos_hint:{"x":0.1,"y":0.6}
+						Label:
+								id:e_mode
+								text:"Select a text file\n ending in .txt"
+								bold:True
+								font_size:30
+								height:30
+						
+								
+								
+								
+				BoxLayout:
+						orientation:"horizontal"
+						size_hint:(0.9,0.5)
+						pos_hint:{"x":0.05,"y":0.55}
+						spacing:5
+						Button:
+								id:"select"
+								text:"Select File"
+								size_hint:(0.2,None)
+								height:50
+								background_normal:" "
+								background_color: [1,0,0,0.5]
+								on_press:root.show_load( )
+						TextInput:
+								id:f_input1
+								text:" "
+								size_hint:(0.3,None)
+								height:50
+				
+						
+				BoxLayout:
+						orientation:"vertical"
+						size_hint:(0.9,0.2)
+						pos_hint:{"x":0.05,"y":0.3}
+						spacing:5
+						Label:
+								id:f_msg
+								text:" "
+								font_size:30
+								height:30
+								bold:True
+					
+						
+						Button:
+								id:encrypt
+								text:"Play"
+								size_hint:(0.3,None)
+								pos_hint:{"x":0.3,"y":0.025}
+								height:50
+								background_normal:" "
+								background_color: [1,0,0,0.5]
+								on_release:root.processFile( root.ids.f_input1.text)
+				Label:
+						text:"\n Slide to Menu"
+						font_size:20
+						pos_hint:{"y":-0.42}
+				
+								
+								
+								
+							
+		Text2Speech:
+				name:"t2sText"
+				on_touch_move:root.current="TextMenu"
+				canvas:
+						Color:
+								rgb:0.6,0.5,0.5
+						Rectangle:
+								size:self.size
+								pos:self.pos
+			
+				BoxLayout:
+						orientation:"vertical"
+						size_hint:(0.9,0.6)
+						pos_hint:{"x":0.05,"y":0.3}	
+						spacing:5
+						
+						
+						Label:
+								text:"Type your text below "
+								pos_hint:{"x":0.1,"y":0.5}
+								font_size:30
+								bold:True
+								size_hint:(0.8,None)
+								height:50
+						TextInput:
+								id:tst
+								text:" "
+								size_hint:(1,None)
+								height:400
+						Label:
+								id:t_msg
+								text:" "		
+								font_size:30
+								height:50
+								bold:True
+				
+						
+				BoxLayout:
+						orientation:"vertical"
+						size_hint:(0.9,0.2)
+						pos_hint:{"x":0.4,"y":0.15}
+						Button:
+								id:encrypt
+								text:"Play"
+								size_hint:(0.3,None)
+								height:50
+								background_normal:" "
+								background_color: [1,0,0,0.5]
+								on_release:root.processText(root.ids.tst.text)
+				Label:
+						text:"\n Slide to Menu"
+						font_size:20
+						pos_hint:{"y":-0.42}
+				
+													
+		
+					
+		
+			
+								
+
+<LoadEncFile>:
+		FileChooserIconView:
+				id:filechooser
+				pos_hint:{"x":0.05,"y":0.05}
+				filter:['!.dat','!.mp3','!.mp4','!.3gp']
+				on_selection:root.load(filechooser.path,filechooser.selection )
+				
+		Button:
+				id:cancel
+				text:"Cancel"
+				size_hint:(0.3,0.08)
+				pos_hint:{"x":0.4,"y":0.05}
+				on_release:app.root.dismiss_pop()
+
+
+				
+		
+		Button:
+				id:cancel
+				text:"Cancel"
+				size_hint:(0.3,0.08)
+				pos_hint:{"x":0.4,"y":0.05}
+				on_release:app.root.dismiss_pop()
+
+
+<AppPop>:
+		Label:
+				id:msg
+				text:" "
+				text_size:root.width,None
+				size:self.texture_size
+				pos:(130,200)
+				
+				
+		Button:
+				id:cancel
+				text:"Close"
+				size_hint:(None,None)
+				width:100
+				height:50
+				pos:(200,200)
+				on_release:app.root.dismiss_pop()
+
+				
+
+
+
+
+
+
+
+		
+						
+				
+	
+	
+
+		
+            
+		
+			
